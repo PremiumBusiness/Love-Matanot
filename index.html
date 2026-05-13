@@ -96,9 +96,13 @@
                 <div id="modal-cat" class="text-emerald-700 text-xs sm:text-sm font-bold uppercase mb-2 sm:mb-3 tracking-widest"></div>
                 <h2 id="modal-title" class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-gray-900 leading-tight"></h2>
                 
-                <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
-                    <span id="modal-price" class="text-3xl sm:text-4xl md:text-5xl font-bold text-emerald-700 tracking-tight"></span>
+                <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8 flex-wrap">
+                    <span id="modal-price" class="text-3xl sm:text-4xl md:text-5xl font-bold text-emerald-700 tracking-tight transition-all duration-300"></span>
                     <span id="modal-size" class="text-sm font-bold text-gray-500 bg-white border border-gray-200 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl shadow-sm"></span>
+                    <button id="reset-price-btn" onclick="resetPrice()" class="hidden text-xs font-bold text-red-500 bg-red-50 hover:bg-red-100 border border-red-100 px-2 sm:px-3 py-1.5 rounded-lg sm:rounded-xl shadow-sm transition-colors flex items-center gap-1">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                        איפוס תוספות
+                    </button>
                 </div>
                 
                 <p id="modal-desc" class="text-gray-600 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 font-bold leading-relaxed"></p>
@@ -110,57 +114,97 @@
                         תוספות שניתן להוסיף:
                     </h3>
                     <ul class="space-y-2 sm:space-y-3 text-xs sm:text-sm font-bold text-gray-700">
-                        <li class="flex justify-between items-center border-b border-emerald-100/50 cursor-pointer hover:bg-white p-2 sm:p-3 rounded-lg sm:rounded-xl transition-all shadow-sm bg-emerald-50/30 group" onclick="openAddonLightbox('https://i.postimg.cc/jjV9YSB0/yyn.jpg')">
+                        <li class="flex justify-between items-center border-b border-emerald-100/50 p-2 sm:p-3 rounded-lg sm:rounded-xl transition-all shadow-sm bg-emerald-50/30">
                             <div class="flex items-center gap-2 sm:gap-3">
-                                <div class="bg-emerald-100 text-emerald-700 p-1 sm:p-1.5 rounded-full group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-                                </div>
                                 <span class="text-sm sm:text-base">🍷 בקבוק יין</span>
+                                <span id="badge-addon-wine" class="hidden bg-blue-500 text-white font-bold px-2 py-0.5 rounded-full text-[10px] sm:text-xs shadow-sm"></span>
                             </div>
-                            <span class="text-emerald-700 font-extrabold text-sm sm:text-base">70 ש"ח</span>
-                        </li>
-                        <li class="flex justify-between items-center border-b border-emerald-100/50 cursor-pointer hover:bg-white p-2 sm:p-3 rounded-lg sm:rounded-xl transition-all shadow-sm bg-emerald-50/30 group" onclick="openAddonLightbox('https://i.postimg.cc/zfmMYG4N/swqwld.jpg')">
-                            <div class="flex items-center gap-2 sm:gap-3">
-                                <div class="bg-emerald-100 text-emerald-700 p-1 sm:p-1.5 rounded-full group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                            <div class="flex items-center gap-3">
+                                <span class="text-emerald-700 font-extrabold text-sm sm:text-base">70 ש"ח</span>
+                                <div class="flex items-center gap-1.5">
+                                    <button onclick="openAddonLightbox('https://i.postimg.cc/jjV9YSB0/yyn.jpg')" class="bg-emerald-100 text-emerald-700 p-1.5 rounded-full hover:bg-emerald-600 hover:text-white transition-colors shadow-sm" title="צפייה בתמונה">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    </button>
+                                    <button onclick="addAddonPrice(70, 'בקבוק יין', 'addon-wine')" class="bg-blue-100 text-blue-600 p-1.5 rounded-full hover:bg-blue-600 hover:text-white transition-colors shadow-sm" title="הוסף לסך הכל">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    </button>
                                 </div>
+                            </div>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-emerald-100/50 p-2 sm:p-3 rounded-lg sm:rounded-xl transition-all shadow-sm bg-emerald-50/30">
+                            <div class="flex items-center gap-2 sm:gap-3">
                                 <span class="text-sm sm:text-base">💝 קופסת שוקולד לב</span>
+                                <span id="badge-addon-choco" class="hidden bg-blue-500 text-white font-bold px-2 py-0.5 rounded-full text-[10px] sm:text-xs shadow-sm"></span>
                             </div>
-                            <span class="text-emerald-700 font-extrabold text-sm sm:text-base">25 ש"ח</span>
-                        </li>
-                        <li class="flex justify-between items-center border-b border-emerald-100/50 cursor-pointer hover:bg-white p-2 sm:p-3 rounded-lg sm:rounded-xl transition-all shadow-sm bg-emerald-50/30 group" onclick="openAddonLightbox('https://www.happiness.co.il/media/catalog/product/cache/c03ce33b703f4dbb560edfd071511fcd/2/_/2_39489.jpg')">
-                            <div class="flex items-center gap-2 sm:gap-3">
-                                <div class="bg-emerald-100 text-emerald-700 p-1 sm:p-1.5 rounded-full group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                            <div class="flex items-center gap-3">
+                                <span class="text-emerald-700 font-extrabold text-sm sm:text-base">25 ש"ח</span>
+                                <div class="flex items-center gap-1.5">
+                                    <button onclick="openAddonLightbox('https://i.postimg.cc/zfmMYG4N/swqwld.jpg')" class="bg-emerald-100 text-emerald-700 p-1.5 rounded-full hover:bg-emerald-600 hover:text-white transition-colors shadow-sm" title="צפייה בתמונה">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    </button>
+                                    <button onclick="addAddonPrice(25, 'קופסת שוקולד לב', 'addon-choco')" class="bg-blue-100 text-blue-600 p-1.5 rounded-full hover:bg-blue-600 hover:text-white transition-colors shadow-sm" title="הוסף לסך הכל">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    </button>
                                 </div>
+                            </div>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-emerald-100/50 p-2 sm:p-3 rounded-lg sm:rounded-xl transition-all shadow-sm bg-emerald-50/30">
+                            <div class="flex items-center gap-2 sm:gap-3">
                                 <span class="text-sm sm:text-base">🎈 בלון יום הולדת</span>
+                                <span id="badge-addon-balloon" class="hidden bg-blue-500 text-white font-bold px-2 py-0.5 rounded-full text-[10px] sm:text-xs shadow-sm"></span>
                             </div>
-                            <span class="text-emerald-700 font-extrabold text-sm sm:text-base">20 ש"ח</span>
-                        </li>
-                        <li class="flex justify-between items-center border-b border-emerald-100/50 cursor-pointer hover:bg-white p-2 sm:p-3 rounded-lg sm:rounded-xl transition-all shadow-sm bg-emerald-50/30 group" onclick="openAddonLightbox('https://maziflowers.co.il/wp-content/uploads/2021/08/1fd0b_1SPLIT202108SPLIT16131343.png')">
-                            <div class="flex items-center gap-2 sm:gap-3">
-                                <div class="bg-emerald-100 text-emerald-700 p-1 sm:p-1.5 rounded-full group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                            <div class="flex items-center gap-3">
+                                <span class="text-emerald-700 font-extrabold text-sm sm:text-base">20 ש"ח</span>
+                                <div class="flex items-center gap-1.5">
+                                    <button onclick="openAddonLightbox('https://www.happiness.co.il/media/catalog/product/cache/c03ce33b703f4dbb560edfd071511fcd/2/_/2_39489.jpg')" class="bg-emerald-100 text-emerald-700 p-1.5 rounded-full hover:bg-emerald-600 hover:text-white transition-colors shadow-sm" title="צפייה בתמונה">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    </button>
+                                    <button onclick="addAddonPrice(20, 'בלון יום הולדת', 'addon-balloon')" class="bg-blue-100 text-blue-600 p-1.5 rounded-full hover:bg-blue-600 hover:text-white transition-colors shadow-sm" title="הוסף לסך הכל">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    </button>
                                 </div>
+                            </div>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-emerald-100/50 p-2 sm:p-3 rounded-lg sm:rounded-xl transition-all shadow-sm bg-emerald-50/30">
+                            <div class="flex items-center gap-2 sm:gap-3">
                                 <span class="text-sm sm:text-base">🎈 בלון יום הולדת הליום</span>
+                                <span id="badge-addon-helium" class="hidden bg-blue-500 text-white font-bold px-2 py-0.5 rounded-full text-[10px] sm:text-xs shadow-sm"></span>
                             </div>
-                            <span class="text-emerald-700 font-extrabold text-sm sm:text-base">30 ש"ח</span>
-                        </li>
-                        <li class="flex justify-between items-center cursor-pointer hover:bg-white p-2 sm:p-3 rounded-lg sm:rounded-xl transition-all shadow-sm bg-emerald-50/30 group" onclick="openAddonLightbox('https://i.postimg.cc/jjV9YSmp/dwby.jpg')">
-                            <div class="flex items-center gap-2 sm:gap-3">
-                                <div class="bg-emerald-100 text-emerald-700 p-1 sm:p-1.5 rounded-full group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                            <div class="flex items-center gap-3">
+                                <span class="text-emerald-700 font-extrabold text-sm sm:text-base">30 ש"ח</span>
+                                <div class="flex items-center gap-1.5">
+                                    <button onclick="openAddonLightbox('https://maziflowers.co.il/wp-content/uploads/2021/08/1fd0b_1SPLIT202108SPLIT16131343.png')" class="bg-emerald-100 text-emerald-700 p-1.5 rounded-full hover:bg-emerald-600 hover:text-white transition-colors shadow-sm" title="צפייה בתמונה">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    </button>
+                                    <button onclick="addAddonPrice(30, 'בלון יום הולדת הליום', 'addon-helium')" class="bg-blue-100 text-blue-600 p-1.5 rounded-full hover:bg-blue-600 hover:text-white transition-colors shadow-sm" title="הוסף לסך הכל">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    </button>
                                 </div>
-                                <span class="text-sm sm:text-base">🧸 דובי 25 ס"מ</span>
                             </div>
-                            <span class="text-emerald-700 font-extrabold text-sm sm:text-base">40 ש"ח</span>
+                        </li>
+                        <li class="flex justify-between items-center p-2 sm:p-3 rounded-lg sm:rounded-xl transition-all shadow-sm bg-emerald-50/30">
+                            <div class="flex items-center gap-2 sm:gap-3">
+                                <span class="text-sm sm:text-base">🧸 דובי 25 ס"מ</span>
+                                <span id="badge-addon-bear" class="hidden bg-blue-500 text-white font-bold px-2 py-0.5 rounded-full text-[10px] sm:text-xs shadow-sm"></span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-emerald-700 font-extrabold text-sm sm:text-base">40 ש"ח</span>
+                                <div class="flex items-center gap-1.5">
+                                    <button onclick="openAddonLightbox('https://i.postimg.cc/jjV9YSmp/dwby.jpg')" class="bg-emerald-100 text-emerald-700 p-1.5 rounded-full hover:bg-emerald-600 hover:text-white transition-colors shadow-sm" title="צפייה בתמונה">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    </button>
+                                    <button onclick="addAddonPrice(40, 'דובי 25 סמ', 'addon-bear')" class="bg-blue-100 text-blue-600 p-1.5 rounded-full hover:bg-blue-600 hover:text-white transition-colors shadow-sm" title="הוסף לסך הכל">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    </button>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
                 
                 <a id="modal-whatsapp" href="" target="_blank" class="mt-auto bg-[#25D366] text-white py-4 sm:py-5 rounded-xl sm:rounded-[1.25rem] text-center font-bold text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 hover:bg-[#128C7E] transition-all transform hover:-translate-y-1">
                     <svg width="24" height="24" class="sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-11.7 8.38 8.38 0 0 1 3.8.9L22 2l-1.5 5.5Z"/></svg>
-                    להזמנה מהירה בוואטסאפ ופרטים נוספים
+                    להזמנה מהירה בוואטסאפ
                 </a>
             </div>
         </div>
@@ -230,6 +274,13 @@
         ];
 
         let activeProduct = null, imgIdx = 0;
+        let currentBasePrice = 0;
+        let currentTotalPrice = 0;
+        
+        // עכשיו משתמשים באובייקט שישמור גם את השם וגם את הכמות
+        let selectedAddons = {}; 
+        
+        const addonIds = ['addon-wine', 'addon-choco', 'addon-balloon', 'addon-helium', 'addon-bear'];
 
         function render() {
             const grid = document.getElementById('product-grid');
@@ -265,8 +316,16 @@
         }
 
         function openModal(id) {
-            activeProduct = products.find(p => p.id === id); imgIdx = 0; updateModalUI();
-            document.getElementById('modal').classList.remove('hidden'); document.body.classList.add('modal-active');
+            activeProduct = products.find(p => p.id === id); 
+            imgIdx = 0; 
+            currentBasePrice = activeProduct.price;
+            
+            // איפוס מלא בכל פתיחה של מוצר
+            resetPrice();
+            
+            updateModalUI();
+            document.getElementById('modal').classList.remove('hidden'); 
+            document.body.classList.add('modal-active');
         }
 
         function closeModal() { document.getElementById('modal').classList.add('hidden'); document.body.classList.remove('modal-active'); }
@@ -275,10 +334,8 @@
             document.getElementById('modal-img').src = activeProduct.images[imgIdx];
             document.getElementById('modal-title').innerText = activeProduct.name;
             document.getElementById('modal-cat').innerText = activeProduct.cat;
-            document.getElementById('modal-price').innerText = activeProduct.price + ' ש"ח';
             document.getElementById('modal-size').innerText = 'עציץ ' + activeProduct.size;
             document.getElementById('modal-desc').innerText = activeProduct.desc;
-            document.getElementById('modal-whatsapp').href = `https://wa.me/972506486449?text=${encodeURIComponent('שלום, אני מעוניין בפרטים לגבי: ' + activeProduct.name)}`;
             document.getElementById('img-label').innerText = imgIdx === 0 ? "תצוגה רגילה" : "ארוז בצלופן חגיגי";
         }
 
@@ -297,6 +354,64 @@
         }
 
         function closeAddonLightbox() { document.getElementById('addon-lightbox').classList.add('hidden'); }
+
+        // הפונקציה החדשה לניהול תוספות עם כמות
+        function addAddonPrice(price, name, addonId) {
+            currentTotalPrice += price;
+            
+            // הוספת 1 לכמות של התוספת הנוכחית (או יצירה אם לא קיימת)
+            selectedAddons[name] = (selectedAddons[name] || 0) + 1;
+            
+            // עדכון התג (Badge) שמציג את הכמות למשתמש
+            const badge = document.getElementById('badge-' + addonId);
+            if (badge) {
+                badge.innerText = selectedAddons[name];
+                badge.classList.remove('hidden');
+            }
+            
+            updatePriceDisplay();
+        }
+
+        // פונקציית האיפוס
+        function resetPrice() {
+            currentTotalPrice = currentBasePrice;
+            selectedAddons = {};
+            
+            // הסתרת כל תגי הכמויות
+            addonIds.forEach(id => {
+                const badge = document.getElementById('badge-' + id);
+                if (badge) badge.classList.add('hidden');
+            });
+            
+            updatePriceDisplay();
+        }
+
+        function updatePriceDisplay() {
+            // עדכון המחיר המוצג
+            document.getElementById('modal-price').innerText = currentTotalPrice + ' ש"ח';
+            
+            // הצגה/הסתרה של כפתור איפוס תוספות
+            const resetBtn = document.getElementById('reset-price-btn');
+            if (currentTotalPrice > currentBasePrice) {
+                resetBtn.classList.remove('hidden');
+            } else {
+                resetBtn.classList.add('hidden');
+            }
+            
+            // עדכון הקישור לוואטסאפ בהתאם למוצר, לתוספות ולכמויות
+            let waText = `שלום, הגעתי דרך האתר ואשמח לפרטים לגבי: ${activeProduct.name} במחיר ${currentBasePrice} ש"ח`;
+            
+            // יצירת מחרוזת של התוספות (לדוגמה: "בקבוק יין (2), בלון יום הולדת (1)")
+            const addonsList = Object.entries(selectedAddons)
+                .map(([name, qty]) => `${name} (${qty})`)
+                .join(', ');
+                
+            if (addonsList.length > 0) {
+                waText += ` + תוספות: ${addonsList}. סה"כ לתשלום: ${currentTotalPrice} ש"ח`;
+            }
+            
+            document.getElementById('modal-whatsapp').href = `https://wa.me/972506486449?text=${encodeURIComponent(waText)}`;
+        }
 
         window.onload = render;
     </script>
